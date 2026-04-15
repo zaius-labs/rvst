@@ -153,6 +153,7 @@ fn tag_to_node_type(tag: &str) -> NodeType {
         "input" => NodeType::Input,
         "textarea" => NodeType::Textarea,
         "form" => NodeType::Form,
+        "canvas" => NodeType::Canvas,
         _ => NodeType::View,
     }
 }
@@ -827,6 +828,19 @@ pub fn register(ctx: &Ctx<'_>) -> rquickjs::Result<()> {
                 .lock()
                 .unwrap()
                 .reset();
+        })?,
+    )?;
+
+    // ── HMR outbound (dev-only; release builds simply never call it) ─
+    //
+    // The WebSocket shim in stubs.js calls this whenever the HMR client
+    // (Svelte/Vite) would normally send a message over its socket. Rust
+    // drains the Op stream each tick and, when `dev-hmr` is active,
+    // forwards the text to the live `vite dev` WebSocket.
+    host.set(
+        "op_hmr_send",
+        Function::new(ctx.clone(), |text: String| {
+            push_op(Op::HmrSend { text });
         })?,
     )?;
 

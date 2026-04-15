@@ -12,6 +12,7 @@ fn node_type_to_qualname(nt: &NodeType) -> QualName {
         NodeType::Textarea => local_name!("textarea"),
         NodeType::Scroll => local_name!("div"),
         NodeType::Form => local_name!("form"),
+        NodeType::Canvas => local_name!("canvas"),
         NodeType::Text => unreachable!("text nodes use create_text_node"),
     };
     QualName::new(None, ns!(html), local)
@@ -31,6 +32,8 @@ pub enum WindowOp {
     Maximize(bool),
     Close,
     SetClipboard(String),
+    /// Dev-only: outbound HMR WebSocket message. Host forwards to `vite dev`.
+    HmrSend(String),
 }
 
 /// Bridge between RVST's Op stream and Blitz's DOM engine.
@@ -194,6 +197,9 @@ impl BlitzBridge {
                 Op::CloseWindow => window_ops.push(WindowOp::Close),
                 Op::ClipboardWrite { text } => {
                     window_ops.push(WindowOp::SetClipboard(text))
+                }
+                Op::HmrSend { text } => {
+                    window_ops.push(WindowOp::HmrSend(text))
                 }
 
                 // Ops handled elsewhere or no-ops for DOM

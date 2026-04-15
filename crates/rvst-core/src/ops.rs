@@ -99,6 +99,13 @@ pub enum Op {
         start_id: NodeId,
         descriptor: Vec<NodeDescriptor>,
     },
+    /// Dev-only: outbound HMR message from the QuickJS `WebSocket` shim.
+    /// Rust forwards this to the live `vite dev` WebSocket connection.
+    /// Release builds still carry the variant (it's a thin String wrapper)
+    /// but nothing emits or consumes it when `dev-hmr` is off.
+    HmrSend {
+        text: String,
+    },
 }
 
 pub fn op_channel() -> (std::sync::mpsc::Sender<Op>, std::sync::mpsc::Receiver<Op>) {

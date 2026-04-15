@@ -165,6 +165,37 @@ impl RvstRuntime {
         });
     }
 
+    /// Evaluate a JS expression and return its string representation.
+    /// Intended for the test harness only. The script runs in the global
+    /// scope; assign to `globalThis.__rvst_test_result` to return complex
+    /// values (since rquickjs returns raw types, not JSON).
+    pub fn eval_for_test(&mut self, script: &str) -> anyhow::Result<String> {
+        set_current_runtime_id(self.runtime_id);
+        self.ctx.with(|ctx| {
+            clear_op_stream();
+            let wrapped = format!(
+                "(function() {{ {script}; return (globalThis.__rvst_test_result === undefined) ? '' : String(globalThis.__rvst_test_result); }})()"
+            );
+            match ctx.eval::<String, _>(wrapped.as_str()) {
+                Ok(s) => Ok(s),
+                Err(e) => {
+                    let exc = ctx.catch();
+                    let msg = exc
+                        .as_exception()
+                        .map(|e| {
+                            format!(
+                                "{}: {}",
+                                e.message().unwrap_or_default(),
+                                e.stack().unwrap_or_default()
+                            )
+                        })
+                        .unwrap_or_else(|| format!("{e}"));
+                    Err(anyhow::anyhow!("eval error: {msg}"))
+                }
+            }
+        })
+    }
+
     pub fn has_pending_work(&self) -> bool {
         TIMER_WHEEL.lock().unwrap().has_pending()
             || commands::has_pending_resolutions()
@@ -547,12 +578,21 @@ impl RvstRuntime {
     }}
   }}
 
-  // Also fire any explicitly registered handlers via __rvst_handlers
+  // If Svelte's delegated walker already dispatched this event, don't
+  // also run the addEventListener bubble path: Svelte registers its own
+  // root handler (Mt) on body/document via addEventListener which would
+  // re-walk Symbol(events) and re-fire the same handler, causing state
+  // to toggle twice on every click.
   if (!handled) {{
-    // Check all handlers for this event type
-    for (const [id, handler] of __rvst_handlers) {{
-      if (!evt.cancelBubble) {{
-        handler.call(targetEl, evt);
+    for (const el of path) {{
+      if (evt.cancelBubble) break;
+      const listeners = el.__rvst_listeners && el.__rvst_listeners[{event_type_json}];
+      if (listeners) {{
+        evt.currentTarget = el;
+        for (const entry of listeners) {{
+          if (evt.cancelBubble) break;
+          try {{ entry.fn.call(el, evt); }} catch (e) {{}}
+        }}
       }}
     }}
   }}

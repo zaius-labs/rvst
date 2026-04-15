@@ -2077,6 +2077,89 @@ Object.defineProperty(globalThis.Node.prototype, 'nextSibling', {
 // so s must === __rvst_element_proto for the exit condition to fire.
 globalThis.EventTarget = function() {};
 globalThis.EventTarget.prototype = { addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } };
+
+// ── WebSocket shim (dev HMR; no native socket in the sandbox) ──
+//
+// Vite's HMR client (`@vite/client`) expects a WebSocket to `vite dev`.
+// We expose a constructor that *looks* like a real WS but routes all
+// traffic through the host: outbound via __host.op_hmr_send, inbound via
+// synthetic `rvst:hmr` events the host dispatches on `document`.
+//
+// This shim has no network access. If the host is not running in --dev
+// mode or the dev-hmr feature is disabled, ops are simply dropped on the
+// Rust side. That's the whole point of the IPC design.
+//
+// Readystate values match the W3C spec (CONNECTING=0, OPEN=1, CLOSING=2,
+// CLOSED=3) so Vite's state machine works unchanged.
+globalThis.WebSocket = function WebSocket(url, protocols) {
+    this.url = String(url);
+    this.protocol = Array.isArray(protocols) ? protocols[0] : (protocols || '');
+    this.readyState = 0; // CONNECTING
+    this.binaryType = 'arraybuffer';
+    this.bufferedAmount = 0;
+    this.extensions = '';
+    const _listeners = { open: [], message: [], error: [], close: [] };
+    const self = this;
+
+    this.addEventListener = function(type, fn) {
+        if (_listeners[type]) _listeners[type].push(fn);
+    };
+    this.removeEventListener = function(type, fn) {
+        if (_listeners[type]) {
+            _listeners[type] = _listeners[type].filter(f => f !== fn);
+        }
+    };
+    const fire = (type, ev) => {
+        const handler = self['on' + type];
+        if (typeof handler === 'function') { try { handler.call(self, ev); } catch (_) {} }
+        for (const fn of _listeners[type] || []) {
+            try { fn.call(self, ev); } catch (_) {}
+        }
+    };
+    this.send = function(data) {
+        if (self.readyState !== 1) return;
+        try { __host.op_hmr_send(typeof data === 'string' ? data : String(data)); } catch (_) {}
+    };
+    this.close = function() {
+        if (self.readyState === 3) return;
+        self.readyState = 3;
+        fire('close', { type: 'close', wasClean: true, code: 1000, reason: '' });
+    };
+
+    // Host dispatches these document events to drive the shim. The Rust
+    // side uses `runtime.dispatch_document_event("rvst:hmr-open", ...)`
+    // and friends when the live Vite connection reports state changes.
+    const onOpen = () => {
+        self.readyState = 1; // OPEN
+        fire('open', { type: 'open' });
+    };
+    const onMessage = (evt) => {
+        // `evt.data` is the JSON text the host forwarded from vite.
+        fire('message', { type: 'message', data: evt?.data ?? '', origin: self.url });
+    };
+    const onClose = () => {
+        if (self.readyState === 3) return;
+        self.readyState = 3;
+        fire('close', { type: 'close', wasClean: false, code: 1006, reason: '' });
+    };
+    const onError = () => {
+        fire('error', { type: 'error' });
+    };
+    document.addEventListener('rvst:hmr-open', onOpen);
+    document.addEventListener('rvst:hmr-message', onMessage);
+    document.addEventListener('rvst:hmr-close', onClose);
+    document.addEventListener('rvst:hmr-error', onError);
+};
+// W3C readystate constants (some clients check these on the prototype)
+globalThis.WebSocket.CONNECTING = 0;
+globalThis.WebSocket.OPEN = 1;
+globalThis.WebSocket.CLOSING = 2;
+globalThis.WebSocket.CLOSED = 3;
+globalThis.WebSocket.prototype = Object.create(null);
+globalThis.WebSocket.prototype.CONNECTING = 0;
+globalThis.WebSocket.prototype.OPEN = 1;
+globalThis.WebSocket.prototype.CLOSING = 2;
+globalThis.WebSocket.prototype.CLOSED = 3;
 globalThis.Element = function() {};
 globalThis.Element.prototype = __rvst_element_proto;
 globalThis.HTMLElement = function() {};

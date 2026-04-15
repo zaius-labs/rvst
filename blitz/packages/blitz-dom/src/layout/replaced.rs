@@ -50,9 +50,17 @@ pub fn replaced_measure_function(
         Size::ZERO
     };
 
-    // Use aspect_ratio from style, fall back to inherent aspect ratio
+    // Use aspect_ratio from style, fall back to inherent aspect ratio.
+    // Canvas with no width/height attrs has inherent (0,0) which yields NaN;
+    // default to 1:1 so applying the ratio doesn't collapse declared sizes.
     let s_aspect_ratio = style.aspect_ratio;
-    let aspect_ratio = s_aspect_ratio.unwrap_or_else(|| inherent_size.width / inherent_size.height);
+    let aspect_ratio = s_aspect_ratio.unwrap_or_else(|| {
+        if inherent_size.width > 0.0 && inherent_size.height > 0.0 {
+            inherent_size.width / inherent_size.height
+        } else {
+            1.0
+        }
+    });
     let inv_aspect_ratio = 1.0 / aspect_ratio;
 
     // See https://www.w3.org/TR/css-sizing-3/#replaced-percentage-min-contribution

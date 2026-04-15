@@ -232,7 +232,8 @@ impl Tree {
             | Op::MinimizeWindow
             | Op::MaximizeWindow { .. }
             | Op::CloseWindow
-            | Op::ClipboardWrite { .. } => {}
+            | Op::ClipboardWrite { .. }
+            | Op::HmrSend { .. } => {}
             Op::SetScroll { id, scroll_y } => {
                 if let Some(n) = self.nodes.get_mut(&id) {
                     n.scroll_y = scroll_y;

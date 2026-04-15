@@ -10,6 +10,7 @@ pub enum NodeType {
     Textarea,
     Scroll,
     Form,
+    Canvas,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
