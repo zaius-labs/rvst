@@ -13,6 +13,7 @@ fn node_type_to_qualname(nt: &NodeType) -> QualName {
         NodeType::Scroll => local_name!("div"),
         NodeType::Form => local_name!("form"),
         NodeType::Canvas => local_name!("canvas"),
+        NodeType::Img => local_name!("img"),
         NodeType::Text => unreachable!("text nodes use create_text_node"),
     };
     QualName::new(None, ns!(html), local)

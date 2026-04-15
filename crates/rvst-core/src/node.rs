@@ -11,6 +11,7 @@ pub enum NodeType {
     Scroll,
     Form,
     Canvas,
+    Img,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]

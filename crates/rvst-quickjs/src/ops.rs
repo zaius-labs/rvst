@@ -154,6 +154,7 @@ fn tag_to_node_type(tag: &str) -> NodeType {
         "textarea" => NodeType::Textarea,
         "form" => NodeType::Form,
         "canvas" => NodeType::Canvas,
+        "img" => NodeType::Img,
         _ => NodeType::View,
     }
 }
