@@ -250,6 +250,39 @@ impl<Rend: WindowRenderer> View<Rend> {
                 }
 
                 self.request_redraw();
+
+                // Process any pending window operations from the document
+                let ops = self.doc.pending_window_ops();
+                for (action, arg) in ops {
+                    match action.as_str() {
+                        "close" => {
+                            // Request close — the event loop will handle CloseRequested
+                            // For now, just log. Actual close requires event_loop.exit()
+                            // which we don't have here. The proxy can signal it.
+                            eprintln!("blitz-shell: window close requested");
+                        }
+                        "minimize" => {
+                            self.window.set_minimized(true);
+                        }
+                        "maximize" => {
+                            let maximize = arg != "false";
+                            self.window.set_maximized(maximize);
+                        }
+                        "toggle_maximize" => {
+                            let is_max = self.window.is_maximized();
+                            self.window.set_maximized(!is_max);
+                        }
+                        "drag" => {
+                            if let Err(e) = self.window.drag_window() {
+                                eprintln!("blitz-shell: drag_window failed: {e}");
+                            }
+                        }
+                        _ => {
+                            eprintln!("blitz-shell: unknown window op: {action}");
+                        }
+                    }
+                }
+
                 return true;
             }
         }

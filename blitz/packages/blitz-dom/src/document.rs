@@ -136,6 +136,12 @@ pub trait Document: Any + 'static {
         false
     }
 
+    /// Drain any pending window operations (close, minimize, maximize, drag, etc.)
+    /// Returns a list of (action, argument) pairs. Default: no ops.
+    fn pending_window_ops(&mut self) -> Vec<(String, String)> {
+        Vec::new()
+    }
+
     /// Get the [`Document`]'s id
     fn id(&self) -> usize {
         self.inner().id
