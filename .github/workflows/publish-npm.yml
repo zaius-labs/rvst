@@ -1,0 +1,93 @@
+name: Publish npm packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish-npm:
+    name: Publish to npmjs.org
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Publish @rvst/vite-plugin
+        working-directory: js/vite-plugin-rvst
+        run: npm publish --access public || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @rvst/create
+        working-directory: packages/create-rvst
+        run: npm publish --access public || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @rvst/cli
+        working-directory: packages/npm
+        run: npm publish --access public || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          scope: '@zaius-labs'
+
+      - name: Publish @zaius-labs/rvst-vite-plugin
+        working-directory: js/vite-plugin-rvst
+        run: |
+          # Temporarily rewrite name for GitHub Packages scope
+          node -e "
+            const pkg = require('./package.json');
+            pkg.name = '@zaius-labs/rvst-vite-plugin';
+            pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          npm publish || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish @zaius-labs/create-rvst
+        working-directory: packages/create-rvst
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            pkg.name = '@zaius-labs/create-rvst';
+            pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          npm publish || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish @zaius-labs/rvst-cli
+        working-directory: packages/npm
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            pkg.name = '@zaius-labs/rvst-cli';
+            pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          npm publish || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

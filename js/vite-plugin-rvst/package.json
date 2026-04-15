@@ -1,0 +1,17 @@
+{
+  "name": "@rvst/vite-plugin",
+  "version": "0.1.1",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zaius-labs/rvst"
+  },
+  "homepage": "https://github.com/zaius-labs/rvst#readme",
+  "bugs": {
+    "url": "https://github.com/zaius-labs/rvst/issues"
+  }
+}

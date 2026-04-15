@@ -1,0 +1,9 @@
+[package]
+name = "rvst-analyze"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rvst-snapshot = { path = "../rvst-snapshot" }
+owo-colors = "4"
+atty = "0.2"

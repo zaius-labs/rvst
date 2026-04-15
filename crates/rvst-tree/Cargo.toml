@@ -1,0 +1,7 @@
+[package]
+name = "rvst-tree"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rvst-core = { path = "../rvst-core" }

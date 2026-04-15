@@ -1,0 +1,10 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "core", "label": "Core Flow", "kind": "group", "parent": null, "priority": 1 },
+    { "id": "input", "label": "Input", "kind": "card", "parent": "core", "fill": "#f5e642", "priority": 1 },
+    { "id": "output", "label": "Output", "kind": "card", "parent": "core", "fill": "#7ecbb5", "priority": 1 }
+  ],
+  "edges": [],
+  "title": null
+}

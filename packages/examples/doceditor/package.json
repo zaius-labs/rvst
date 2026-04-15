@@ -1,0 +1,15 @@
+{
+  "name": "rvst-doceditor-example",
+  "type": "module",
+  "private": true,
+  "scripts": { "build": "vite build" },
+  "dependencies": {
+    "lexical": "^0.22.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "@rvst/renderer-bridge": "file:../../../js/renderer-bridge-js"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "source", "label": "Trajectories", "kind": "card", "parent": null, "fill": "#f5e642", "priority": 1 },
+    { "id": "intent", "label": "Intent", "kind": "card", "parent": null, "fill": "#f47b5e", "priority": 1 },
+    { "id": "space", "label": "Space", "kind": "card", "parent": null, "fill": "#c9a8d4", "priority": 1 },
+    { "id": "inertia", "label": "Inertia", "kind": "card", "parent": null, "fill": "#7ecbb5", "priority": 1 },
+    { "id": "moe", "label": "MoE Fusion", "kind": "card", "parent": null, "fill": "#f4a543", "priority": 1 },
+    { "id": "pressure", "label": "Pressure Score", "kind": "card", "parent": null, "fill": "#a8d86e", "priority": 1 }
+  ],
+  "edges": [
+    { "from": "source", "to": "intent" },
+    { "from": "source", "to": "space" },
+    { "from": "source", "to": "inertia" },
+    { "from": "intent", "to": "moe" },
+    { "from": "space", "to": "moe" },
+    { "from": "inertia", "to": "moe" },
+    { "from": "moe", "to": "pressure" }
+  ],
+  "title": "Canopy Signal Flow"
+}

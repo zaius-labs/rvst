@@ -1,0 +1,11 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "a", "label": "Intent", "kind": "card", "parent": null, "fill": "#f5e642", "priority": 1 },
+    { "id": "b", "label": "Space", "kind": "card", "parent": null, "fill": "#f47b5e", "priority": 1 },
+    { "id": "c", "label": "Inertia", "kind": "card", "parent": null, "fill": "#c9a8d4", "priority": 1 },
+    { "id": "d", "label": "Entropy", "kind": "card", "parent": null, "fill": "#7ecbb5", "priority": 1 }
+  ],
+  "edges": [],
+  "title": null
+}

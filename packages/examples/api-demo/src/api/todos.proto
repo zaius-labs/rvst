@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package rvst;
+
+message Todo {
+  double id = 1;
+  string text = 2;
+  bool done = 3;
+}
+
+message GetTodosRequest {
+}
+
+message GetTodosResponse {
+  repeated Todo items = 1;
+}
+
+message AddTodoRequest {
+  string text = 1;
+}
+
+message AddTodoResponse {
+  Todo result = 1;
+}
+
+message ToggleTodoRequest {
+  double id = 1;
+}
+
+message ToggleTodoResponse {
+  Todo result = 1;
+}
+
+service TodosService {
+  rpc GetTodos (GetTodosRequest) returns (GetTodosResponse);
+  rpc AddTodo (AddTodoRequest) returns (AddTodoResponse);
+  rpc ToggleTodo (ToggleTodoRequest) returns (ToggleTodoResponse);
+}

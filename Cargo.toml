@@ -1,0 +1,20 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rvst-core",
+    "crates/rvst-tree",
+    "crates/rvst-text",
+    "crates/rvst-quickjs",
+    "crates/rvst-engine",
+    "crates/rvst-shell",
+    "crates/rvst-render-wgpu",
+    "crates/rvst-diagram",
+    "crates/rvst-diagram-harness",
+    "crates/rvst-analyze",
+    "crates/rvst-snapshot",
+    "crates/rvst-editor",
+    "crates/rvst-macro",
+    "crates/rvst-web",
+    "crates/rvst-stylo",
+    "crates/rvst-blitz-bridge",
+]

@@ -1,0 +1,20 @@
+{
+  "productName": "bench-tauri",
+  "version": "0.1.0",
+  "identifier": "com.rvst.bench",
+  "build": {
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Bench",
+        "width": 1024,
+        "height": 768
+      }
+    ]
+  },
+  "bundle": {
+    "active": false
+  }
+}

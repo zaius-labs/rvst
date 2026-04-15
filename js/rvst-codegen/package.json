@@ -1,0 +1,9 @@
+{
+  "name": "@rvst/codegen",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "dependencies": {
+    "@rvst/api": "file:../rvst-api"
+  }
+}

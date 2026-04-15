@@ -1,0 +1,33 @@
+[package]
+name = "rvst-shell"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "rvst"
+path = "src/main.rs"
+
+[lib]
+name = "rvst_shell"
+path = "src/lib.rs"
+
+[dependencies]
+taffy = "0.9"
+winit = "0.30"
+rvst-core = { path = "../rvst-core" }
+rvst-render-wgpu = { path = "../rvst-render-wgpu" }
+rvst-quickjs = { path = "../rvst-quickjs" }
+rvst-tree = { path = "../rvst-tree" }
+rvst-text = { path = "../rvst-text" }
+rvst-engine = { path = "../rvst-engine" }
+rvst-analyze = { path = "../rvst-analyze" }
+rvst-editor = { path = "../rvst-editor" }
+rvst-snapshot = { path = "../rvst-snapshot" }
+rvst-stylo = { path = "../rvst-stylo" }
+vello = "0.8"
+peniko = "0.6"
+kurbo = "0.13"
+arboard = "3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+lightningcss = { version = "1.0.0-alpha.71", default-features = false }

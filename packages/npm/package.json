@@ -1,0 +1,38 @@
+{
+  "name": "@rvst/cli",
+  "version": "0.2.0",
+  "description": "Native desktop engine for Svelte — build, run, and ship desktop apps",
+  "type": "module",
+  "bin": {
+    "rvst": "bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "files": [
+    "bin",
+    "install.js",
+    "templates",
+    "README.md"
+  ],
+  "keywords": [
+    "svelte",
+    "desktop",
+    "native",
+    "rust",
+    "vello",
+    "tauri-alternative"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zaius-labs/rvst"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "homepage": "https://github.com/zaius-labs/rvst#readme",
+  "bugs": {
+    "url": "https://github.com/zaius-labs/rvst/issues"
+  }
+}

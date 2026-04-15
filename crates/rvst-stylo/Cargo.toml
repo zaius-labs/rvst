@@ -1,0 +1,31 @@
+[package]
+name = "rvst-stylo"
+version = "0.1.0"
+edition = "2021"
+description = "Stylo CSS engine integration for RVST"
+license = "MIT AND MPL-2.0"
+
+[dependencies]
+rvst-core = { path = "../rvst-core" }
+rvst-tree = { path = "../rvst-tree" }
+
+# Stylo CSS engine (servo feature = standalone, no Gecko/Firefox bindings)
+stylo = { version = "0.16", default-features = false, features = ["servo"] }
+selectors = "0.37"
+servo_arc = "0.4"
+stylo_atoms = "0.16"
+stylo_dom = "0.16"
+stylo_traits = "0.16"
+stylo_static_prefs = "0.16"
+stylo_malloc_size_of = "0.16"
+
+# Layout engine (for computed value conversion)
+taffy = "0.9"
+
+# Shared deps
+atomic_refcell = "0.1"
+smallvec = "1.0"
+log = "0.4"
+app_units = "0.7"
+euclid = "0.22"
+url = "2"

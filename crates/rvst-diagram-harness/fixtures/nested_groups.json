@@ -1,0 +1,12 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "canopy", "label": "Canopy ML", "kind": "group", "parent": null, "priority": 1 },
+    { "id": "signals", "label": "Signals", "kind": "group", "parent": "canopy", "priority": 1 },
+    { "id": "intent", "label": "Intent", "kind": "card", "parent": "signals", "fill": "#f5e642", "priority": 1 },
+    { "id": "space", "label": "Space", "kind": "card", "parent": "signals", "fill": "#f47b5e", "priority": 1 },
+    { "id": "moe", "label": "MoE Fusion", "kind": "card", "parent": "canopy", "fill": "#c9a8d4", "priority": 1 }
+  ],
+  "edges": [],
+  "title": null
+}

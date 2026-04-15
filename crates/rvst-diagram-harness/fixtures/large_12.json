@@ -1,0 +1,30 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "canopy", "label": "Canopy", "kind": "group", "parent": null, "priority": 1 },
+    { "id": "intent", "label": "Intent", "kind": "card", "parent": "canopy", "fill": "#f5e642", "priority": 1 },
+    { "id": "space", "label": "Space", "kind": "card", "parent": "canopy", "fill": "#f47b5e", "priority": 1 },
+    { "id": "inertia", "label": "Inertia", "kind": "card", "parent": "canopy", "fill": "#c9a8d4", "priority": 1 },
+    { "id": "entropy", "label": "Entropy", "kind": "card", "parent": "canopy", "fill": "#7ecbb5", "priority": 1 },
+    { "id": "lattice", "label": "Lattice", "kind": "card", "parent": "canopy", "fill": "#f4a543", "priority": 1 },
+    { "id": "bitcodec", "label": "BitCodec", "kind": "card", "parent": "canopy", "fill": "#a8d86e", "priority": 1 },
+    { "id": "moe", "label": "MoE Fusion", "kind": "card", "parent": null, "fill": "#f47b5e", "priority": 1 },
+    { "id": "pressure", "label": "Pressure", "kind": "card", "parent": null, "fill": "#7ecbb5", "priority": 1 },
+    { "id": "phase", "label": "Phase", "kind": "card", "parent": null, "fill": "#c9a8d4", "priority": 1 },
+    { "id": "scheduler", "label": "Scheduler", "kind": "card", "parent": null, "fill": "#f5e642", "priority": 1 },
+    { "id": "agents", "label": "Agents", "kind": "card", "parent": null, "fill": "#f4a543", "priority": 1 }
+  ],
+  "edges": [
+    { "from": "intent", "to": "moe" },
+    { "from": "space", "to": "moe" },
+    { "from": "inertia", "to": "moe" },
+    { "from": "entropy", "to": "moe" },
+    { "from": "lattice", "to": "moe" },
+    { "from": "bitcodec", "to": "moe" },
+    { "from": "moe", "to": "pressure" },
+    { "from": "moe", "to": "phase" },
+    { "from": "pressure", "to": "scheduler" },
+    { "from": "scheduler", "to": "agents" }
+  ],
+  "title": "Zaius Architecture"
+}

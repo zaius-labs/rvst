@@ -1,0 +1,16 @@
+{
+  "name": "bench-electron",
+  "type": "module",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "build": "vite build",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "vite": "^6.0.0",
+    "electron": "^33.0.0"
+  }
+}

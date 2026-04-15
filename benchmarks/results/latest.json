@@ -1,0 +1,41 @@
+{
+  "rvst": {
+    "cold_startup_ms": 808.3,
+    "warm_startup_ms": 811.0,
+    "memory_idle_mb": 289.6,
+    "memory_peak_mb": 5340.0,
+    "binary_size_mb": 15.9,
+    "internal_metrics": {
+      "table_generate": 0.95,
+      "table_sort": 9.12,
+      "first_paint_ms": 11.53,
+      "fs_write_1mb_ms": 0.36,
+      "fs_read_1mb_ms": 0.48
+    }
+  },
+  "electron": {
+    "cold_startup_ms": 2327.4,
+    "warm_startup_ms": 811.0,
+    "memory_idle_mb": 471.8,
+    "memory_peak_mb": 472.2,
+    "binary_size_mb": 391.4,
+    "internal_metrics": {
+      "table_generate": 0.4,
+      "table_sort": 2.4,
+      "first_paint_ms": 4.5,
+      "fs_write_1mb_ms": 0.6
+    }
+  },
+  "tauri": {
+    "cold_startup_ms": 1309.6,
+    "warm_startup_ms": 808.9,
+    "memory_idle_mb": 75.9,
+    "memory_peak_mb": 76.2,
+    "binary_size_mb": 7.7,
+    "internal_metrics": {
+      "table_generate": 1.0,
+      "table_sort": 2,
+      "first_paint_ms": 5
+    }
+  }
+}

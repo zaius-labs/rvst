@@ -1,0 +1,40 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    {
+      "id": "canopy",
+      "label": "Canopy ML",
+      "kind": "card",
+      "parent": null,
+      "fill": "#f5e642",
+      "priority": 1,
+      "description": "Six-signal learned model that predicts pressure scores for agent scheduling",
+      "metadata": [["AUROC", "0.924"], ["Backbone", "Mamba"]]
+    },
+    {
+      "id": "rvst",
+      "label": "RVST",
+      "kind": "card",
+      "parent": null,
+      "fill": "#f47b5e",
+      "priority": 1,
+      "description": "Verifiable UI rendering engine in Rust",
+      "metadata": [["Engine", "Vello+wgpu"], ["Layout", "Taffy"]]
+    },
+    {
+      "id": "zaius",
+      "label": "Zaius Platform",
+      "kind": "card",
+      "parent": null,
+      "fill": "#7ecbb5",
+      "priority": 1,
+      "description": "Pressure-field coordination system for AI agents via Elixir server",
+      "metadata": [["Protocol", "gRPC"], ["Agents", "Claude, Codex, Cursor"]]
+    }
+  ],
+  "edges": [
+    { "from": "canopy", "to": "zaius", "label": "pressure scores" },
+    { "from": "rvst", "to": "zaius", "label": "visual verification" }
+  ],
+  "title": "Zaius Projects"
+}

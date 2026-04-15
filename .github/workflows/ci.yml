@@ -1,0 +1,147 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  check:
+    name: Check & Test
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvulkan-dev libwayland-dev libfontconfig-dev pkg-config
+
+      - name: Build
+        run: cargo build -p rvst-shell -p rvst-text -p rvst-diagram
+
+      - name: Run unit tests
+        run: |
+          cargo test -p rvst-core
+          cargo test -p rvst-tree
+          cargo test -p rvst-text
+          cargo test -p rvst-diagram
+          cargo test -p rvst-shell --lib
+
+      - name: Run CSS engine tests
+        run: cargo test -p rvst-shell --lib -- css
+
+      - name: Run RenderQuery benchmark
+        run: cargo test -p rvst-shell --lib -- renderquery_benchmark
+
+      - name: Run diagram fixture suite
+        if: runner.os != 'Linux'  # headless GPU needed
+        run: cargo run -p rvst-diagram-harness -- fixture-suite
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - name: Install Linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y libvulkan-dev libwayland-dev libfontconfig-dev pkg-config
+      - run: cargo clippy -p rvst-shell -p rvst-text -p rvst-diagram -- -D warnings
+
+  fmt:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --all -- --check
+
+  release:
+    name: Release
+    needs: [check, clippy]
+    if: startsWith(github.ref, 'refs/tags/v')
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact: rvst-macos-arm64
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact: rvst-macos-x64
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact: rvst-linux-x64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact: rvst-windows-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libvulkan-dev libwayland-dev libfontconfig-dev pkg-config
+
+      - name: Build release
+        run: cargo build --release -p rvst-shell --target ${{ matrix.target }}
+
+      - name: Package (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p dist
+          cp target/${{ matrix.target }}/release/rvst dist/
+          tar czf ${{ matrix.artifact }}.tar.gz -C dist rvst
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          mkdir dist
+          copy target\${{ matrix.target }}\release\rvst.exe dist\
+          Compress-Archive -Path dist\rvst.exe -DestinationPath ${{ matrix.artifact }}.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}.*
+
+      - name: GitHub Release
+        if: matrix.os == 'macos-latest' && matrix.target == 'aarch64-apple-darwin'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            rvst-macos-arm64.tar.gz
+            rvst-macos-x64.tar.gz
+            rvst-linux-x64.tar.gz
+            rvst-windows-x64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

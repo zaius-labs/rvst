@@ -1,0 +1,29 @@
+{
+  "name": "@rvst/create",
+  "version": "2.0.1",
+  "description": "Scaffold a new RVST desktop app",
+  "type": "module",
+  "bin": {
+    "create-rvst": "index.js"
+  },
+  "files": [
+    "index.js",
+    "templates"
+  ],
+  "keywords": [
+    "rvst",
+    "svelte",
+    "desktop",
+    "native",
+    "rust"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zaius-labs/rvst"
+  },
+  "homepage": "https://github.com/zaius-labs/rvst#readme",
+  "bugs": {
+    "url": "https://github.com/zaius-labs/rvst/issues"
+  }
+}

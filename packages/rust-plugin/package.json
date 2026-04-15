@@ -1,0 +1,11 @@
+{
+  "name": "@rvst/rust-plugin",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": ["src"],
+  "description": "Vite plugin for building native Rust code in RVST apps"
+}

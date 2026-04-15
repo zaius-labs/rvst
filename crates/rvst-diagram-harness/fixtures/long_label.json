@@ -1,0 +1,10 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "sys", "label": "System Overview", "kind": "group", "parent": null, "priority": 1 },
+    { "id": "pressure", "label": "Pressure-Field Coordination Engine", "kind": "card", "parent": "sys", "fill": "#f47b5e", "priority": 1 },
+    { "id": "short", "label": "Agent", "kind": "card", "parent": "sys", "fill": "#c9a8d4", "priority": 1 }
+  ],
+  "edges": [],
+  "title": "Long Label Test"
+}

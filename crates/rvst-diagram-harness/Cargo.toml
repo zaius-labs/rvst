@@ -1,0 +1,18 @@
+[package]
+name = "rvst-diagram-harness"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "diagram-harness"
+path = "src/main.rs"
+
+[dependencies]
+rvst-core = { path = "../rvst-core" }
+rvst-tree = { path = "../rvst-tree" }
+rvst-text = { path = "../rvst-text" }
+rvst-shell = { path = "../rvst-shell" }
+rvst-render-wgpu = { path = "../rvst-render-wgpu" }
+rvst-diagram = { path = "../rvst-diagram" }
+serde_json = "1"
+image = { version = "0.25", default-features = false, features = ["png", "gif"] }

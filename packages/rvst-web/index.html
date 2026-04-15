@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RVST Web</title>
+  <style>
+    * { margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+    canvas { width: 100vw; height: 100vh; display: block; }
+    #status { position: fixed; top: 10px; left: 10px; color: #fff; font: 14px monospace; z-index: 999; }
+  </style>
+</head>
+<body>
+  <canvas id="rvst-canvas"></canvas>
+  <div id="status">Loading WASM...</div>
+  <script type="module">
+    import init, { RvstEngine } from './pkg/rvst_web.js';
+    import { createProxyDOM } from './proxy-dom.js';
+
+    const status = document.getElementById('status');
+
+    async function main() {
+      // 1. Initialize WASM
+      status.textContent = 'Initializing WASM...';
+      await init();
+
+      // 2. Set up canvas
+      const canvas = document.getElementById('rvst-canvas');
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
+
+      // 3. Create engine + GPU
+      status.textContent = 'Initializing GPU...';
+      const engine = new RvstEngine(w, h);
+      await engine.init_gpu(canvas);
+
+      // 4. Create proxy DOM
+      const proxyDOM = createProxyDOM(engine);
+
+      // 5. Set up global shims so Svelte finds what it expects
+      // Override document with our proxy for the Svelte app module
+      const realDocument = document;
+      const realWindow = window;
+
+      // 6. Font is embedded in WASM binary — no loading needed
+
+      // 7. Load CSS (if available)
+      try {
+        const cssResp = await fetch('./app.css');
+        if (cssResp.ok) {
+          const cssText = await cssResp.text();
+          engine.load_css(cssText);
+        }
+      } catch (e) {
+        console.log('No app.css found, continuing without CSS');
+      }
+
+      // 8. Demo: create a simple UI to prove rendering works
+      status.textContent = 'Building demo UI...';
+
+      const root = engine.root_id();
+
+      // Create a container with background
+      const container = engine.create_node('div');
+      engine.set_style(container, 'background-color', '#6366f1');
+      engine.set_style(container, 'width', '100%');
+      engine.set_style(container, 'height', '100%');
+      engine.set_style(container, 'display', 'flex');
+      engine.set_style(container, 'flex-direction', 'column');
+      engine.set_style(container, 'align-items', 'center');
+      engine.set_style(container, 'justify-content', 'center');
+      engine.insert(root, container, undefined);
+
+      // Title text
+      const title = engine.create_text_node('RVST Web');
+      const titleWrap = engine.create_node('div');
+      engine.set_style(titleWrap, 'color', '#ffffff');
+      engine.set_style(titleWrap, 'font-size', '48px');
+      engine.set_style(titleWrap, 'font-weight', '700');
+      engine.insert(titleWrap, title, undefined);
+      engine.insert(container, titleWrap, undefined);
+
+      // Subtitle
+      const sub = engine.create_text_node('Rendering engine running in WebAssembly');
+      const subWrap = engine.create_node('div');
+      engine.set_style(subWrap, 'color', 'rgba(255,255,255,0.8)');
+      engine.set_style(subWrap, 'font-size', '20px');
+      engine.set_style(subWrap, 'margin-top', '16px');
+      engine.insert(subWrap, sub, undefined);
+      engine.insert(container, subWrap, undefined);
+
+      // Card
+      const card = engine.create_node('div');
+      engine.set_style(card, 'background-color', '#ffffff');
+      engine.set_style(card, 'border-radius', '12px');
+      engine.set_style(card, 'padding', '32px');
+      engine.set_style(card, 'margin-top', '32px');
+      engine.set_style(card, 'width', '400px');
+      engine.insert(container, card, undefined);
+
+      const cardTitle = engine.create_text_node('Same engine, two targets');
+      const cardTitleWrap = engine.create_node('div');
+      engine.set_style(cardTitleWrap, 'font-size', '24px');
+      engine.set_style(cardTitleWrap, 'font-weight', '600');
+      engine.set_style(cardTitleWrap, 'color', '#1e1b4b');
+      engine.insert(cardTitleWrap, cardTitle, undefined);
+      engine.insert(card, cardTitleWrap, undefined);
+
+      const desc = engine.create_text_node(
+        'This page is rendered by rvst-engine compiled to WASM. ' +
+        'The same Rust code renders the desktop app via native wgpu.'
+      );
+      const descWrap = engine.create_node('div');
+      engine.set_style(descWrap, 'font-size', '14px');
+      engine.set_style(descWrap, 'color', '#4b5563');
+      engine.set_style(descWrap, 'margin-top', '12px');
+      engine.set_style(descWrap, 'line-height', '1.6');
+      engine.insert(descWrap, desc, undefined);
+      engine.insert(card, descWrap, undefined);
+
+      // Node count badge
+      const badge = engine.create_node('div');
+      engine.set_style(badge, 'background-color', '#e0e7ff');
+      engine.set_style(badge, 'color', '#4338ca');
+      engine.set_style(badge, 'padding', '8px 16px');
+      engine.set_style(badge, 'border-radius', '999px');
+      engine.set_style(badge, 'font-size', '13px');
+      engine.set_style(badge, 'font-weight', '500');
+      engine.set_style(badge, 'margin-top', '16px');
+      const badgeText = engine.create_text_node(`${engine.node_count()} nodes in tree`);
+      engine.insert(badge, badgeText, undefined);
+      engine.insert(card, badge, undefined);
+
+      // 8. Render!
+      status.textContent = 'Rendering...';
+      engine.render();
+
+      status.textContent = `RVST Web ready (${engine.node_count()} nodes, ${w}x${h})`;
+      setTimeout(() => { status.style.display = 'none'; }, 3000);
+
+      // Handle resize
+      window.addEventListener('resize', () => {
+        const nw = window.innerWidth;
+        const nh = window.innerHeight;
+        canvas.width = nw;
+        canvas.height = nh;
+        engine.resize(nw, nh);
+        engine.render();
+      });
+    }
+
+    main().catch(e => {
+      status.textContent = `Error: ${e}`;
+      console.error(e);
+    });
+  </script>
+</body>
+</html>

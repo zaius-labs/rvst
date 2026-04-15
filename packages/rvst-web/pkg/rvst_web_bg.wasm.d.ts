@@ -1,0 +1,30 @@
+/* tslint:disable */
+/* eslint-disable */
+export const memory: WebAssembly.Memory;
+export const __wbg_rvstengine_free: (a: number, b: number) => void;
+export const rvstengine_create_node: (a: number, b: number, c: number) => number;
+export const rvstengine_create_text_node: (a: number, b: number, c: number) => number;
+export const rvstengine_init_gpu: (a: number, b: any) => any;
+export const rvstengine_insert: (a: number, b: number, c: number, d: number) => void;
+export const rvstengine_load_css: (a: number, b: number, c: number) => void;
+export const rvstengine_load_font: (a: number, b: number, c: number) => void;
+export const rvstengine_new: (a: number, b: number) => number;
+export const rvstengine_node_count: (a: number) => number;
+export const rvstengine_remove: (a: number, b: number) => void;
+export const rvstengine_render: (a: number) => [number, number];
+export const rvstengine_resize: (a: number, b: number, c: number) => void;
+export const rvstengine_root_id: (a: number) => number;
+export const rvstengine_set_attribute: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
+export const rvstengine_set_text: (a: number, b: number, c: number, d: number) => void;
+export const rvstengine_set_style: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
+export const wasm_bindgen__convert__closures_____invoke__h198a19b838b56e9e: (a: number, b: number, c: any) => [number, number];
+export const wasm_bindgen__convert__closures_____invoke__h2e60e120c234346b: (a: number, b: number, c: any, d: any) => void;
+export const wasm_bindgen__convert__closures_____invoke__h71ae0784a9c27206: (a: number, b: number, c: any) => void;
+export const __wbindgen_malloc: (a: number, b: number) => number;
+export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+export const __wbindgen_exn_store: (a: number) => void;
+export const __externref_table_alloc: () => number;
+export const __wbindgen_externrefs: WebAssembly.Table;
+export const __wbindgen_destroy_closure: (a: number, b: number) => void;
+export const __externref_table_dealloc: (a: number) => void;
+export const __wbindgen_start: () => void;

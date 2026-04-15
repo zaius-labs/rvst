@@ -1,0 +1,21 @@
+#[derive(Debug, Clone)]
+pub enum EditorCommand {
+    InsertText(String),
+    DeleteBackward,
+    DeleteForward,
+    InsertParagraph,
+    MoveLeft,
+    MoveRight,
+    MoveToLineStart,
+    MoveToLineEnd,
+    SelectLeft,
+    SelectRight,
+    SelectToLineStart,
+    SelectToLineEnd,
+    SelectAll,
+    Undo,
+    Redo,
+    FormatBold,
+    FormatItalic,
+    FormatCode,
+}

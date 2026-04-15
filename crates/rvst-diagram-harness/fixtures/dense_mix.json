@@ -1,0 +1,13 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    { "id": "g", "label": "System", "kind": "group", "parent": null, "priority": 1 },
+    { "id": "short1", "label": "Agent", "kind": "card", "parent": "g", "fill": "#f5e642", "priority": 1 },
+    { "id": "long1", "label": "Pressure-Field Coordination Engine", "kind": "card", "parent": "g", "fill": "#f47b5e", "priority": 1 },
+    { "id": "short2", "label": "MoE", "kind": "card", "parent": "g", "fill": "#c9a8d4", "priority": 1 },
+    { "id": "long2", "label": "Rolling Context Window Management", "kind": "card", "parent": "g", "fill": "#7ecbb5", "priority": 1 },
+    { "id": "tiny", "label": "OK", "kind": "card", "parent": "g", "fill": "#f4a543", "priority": 1 }
+  ],
+  "edges": [],
+  "title": null
+}

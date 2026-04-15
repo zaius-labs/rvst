@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — browser comparison</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #13131f; color: #eee; font-family: sans-serif; }
+    button { cursor: pointer; border: none; color: inherit; font-family: inherit; }
+    input { border: none; outline: none; color: inherit; font-family: inherit; }
+    #app { height: 100%; display: flex; }
+  </style>
+  <script type="module">
+    import { rvst_mount } from './dist/dashboard2.js';
+    rvst_mount(document.getElementById('app'));
+  </script>
+</head>
+<body><div id="app"></div></body>
+</html>

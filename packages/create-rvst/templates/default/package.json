@@ -1,0 +1,16 @@
+{
+  "name": "rvst-app",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "@rvst/vite-plugin": "latest"
+  }
+}

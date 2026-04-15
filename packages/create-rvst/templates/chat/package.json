@@ -1,0 +1,19 @@
+{
+  "name": "rvst-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@rvst/vite-plugin": "file:../../../../js/vite-plugin-rvst",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "@rvst/renderer-bridge": "file:../../../../js/renderer-bridge-js",
+    "phosphor-icons": "^1.4.2",
+    "svelte-sonner": "^1.1.0"
+  }
+}

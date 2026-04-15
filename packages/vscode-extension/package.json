@@ -1,0 +1,29 @@
+{
+  "name": "rvst-vscode",
+  "displayName": "RVST",
+  "description": "RVST support for VS Code — Rust blocks in Svelte, native diagnostics",
+  "version": "0.1.0",
+  "publisher": "zaius-labs",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Programming Languages"],
+  "activationEvents": ["onLanguage:svelte"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "grammars": [{
+      "scopeName": "source.rust.embedded.svelte",
+      "path": "./syntaxes/rust-in-svelte.json",
+      "injectTo": ["source.svelte"],
+      "embeddedLanguages": {
+        "source.rust": "rust"
+      }
+    }]
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.0.0"
+  }
+}

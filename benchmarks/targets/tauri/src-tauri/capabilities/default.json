@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "Bench capabilities",
+  "windows": ["main"],
+  "permissions": []
+}

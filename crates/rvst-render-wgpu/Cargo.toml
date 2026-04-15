@@ -1,0 +1,11 @@
+[package]
+name = "rvst-render-wgpu"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wgpu = "28"
+vello = "0.8"
+peniko = "0.6"
+pollster = "0.3"
+winit = "0.30"

@@ -1,0 +1,29 @@
+{
+  "canvas": { "width": 1200, "height": 630, "padding": 40 },
+  "nodes": [
+    {
+      "id": "canopy",
+      "label": "Canopy ML",
+      "kind": "card",
+      "parent": null,
+      "fill": "#f5e642",
+      "priority": 1,
+      "description": "Learned model for agent pressure scoring",
+      "image": "canopy-arch.png"
+    },
+    {
+      "id": "rvst",
+      "label": "RVST",
+      "kind": "card",
+      "parent": null,
+      "fill": "#f47b5e",
+      "priority": 1,
+      "description": "Verifiable rendering engine",
+      "image": "rvst-demo.png"
+    }
+  ],
+  "edges": [
+    { "from": "canopy", "to": "rvst", "label": "renders" }
+  ],
+  "title": null
+}

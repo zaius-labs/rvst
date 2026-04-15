@@ -1,0 +1,11 @@
+{
+  "name": "rvst-snippetprops-example",
+  "type": "module",
+  "private": true,
+  "scripts": { "build": "vite build" },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0"
+  }
+}

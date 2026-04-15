@@ -1,0 +1,10 @@
+[package]
+name = "rvst-editor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rvst-text = { path = "../rvst-text" }
+vello = "0.8"
+peniko = "0.6"
+kurbo = "0.13"

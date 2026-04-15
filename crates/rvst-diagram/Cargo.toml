@@ -1,0 +1,18 @@
+[package]
+name = "rvst-diagram"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rvst-core = { path = "../rvst-core" }
+rvst-tree = { path = "../rvst-tree" }
+rvst-text = { path = "../rvst-text" }
+rvst-shell = { path = "../rvst-shell" }
+rvst-render-wgpu = { path = "../rvst-render-wgpu" }
+petgraph = "0.6"
+gen-sugiyama = "0.1"
+vello = "0.8"
+pathfinding = "4"
+cmaes = { version = "0.2.2", default-features = false }

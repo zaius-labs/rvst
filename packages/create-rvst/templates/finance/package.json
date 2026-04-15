@@ -1,0 +1,17 @@
+{
+  "name": "rvst-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "vite": "^6.0.0",
+    "@rvst/vite-plugin": "latest"
+  },
+  "dependencies": {
+    "phosphor-icons": "^1.4.2"
+  }
+}

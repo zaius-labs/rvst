@@ -1,0 +1,9 @@
+[package]
+name = "rvst-blitz-bridge"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rvst-core = { path = "../rvst-core" }
+blitz-dom = { path = "../../../packages/blitz/packages/blitz-dom", default-features = false, features = [] }
+markup5ever = "0.37.0"

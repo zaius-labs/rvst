@@ -1,0 +1,8 @@
+target/
+node_modules/
+dist/
+*.lock
+
+# Claude Code / AI tooling
+.claude/
+.beads/

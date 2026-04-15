@@ -1,0 +1,10 @@
+[package]
+name = "rvst-text"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cosmic-text = "0.18"
+parley = { version = "0.7", features = ["std", "system"] }
+peniko = "0.6"
+skrifa = "0.37"
