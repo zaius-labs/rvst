@@ -12,7 +12,7 @@ serde_json = "1"
 blitz = ["dep:blitz-dom"]
 
 [dependencies.blitz-dom]
-path = "../../../packages/blitz/packages/blitz-dom"
+path = "../../blitz/packages/blitz-dom"
 optional = true
 
 [dev-dependencies]

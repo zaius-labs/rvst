@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 rvst-core = { path = "../rvst-core" }
-blitz-dom = { path = "../../../packages/blitz/packages/blitz-dom", default-features = false, features = [] }
+blitz-dom = { path = "../../blitz/packages/blitz-dom", default-features = false, features = [] }
 markup5ever = "0.37.0"
