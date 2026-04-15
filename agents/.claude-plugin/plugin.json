@@ -1,0 +1,14 @@
+{
+  "name": "rvst",
+  "version": "0.1.0",
+  "description": "RVST desktop rendering engine — headless validation tools (--dump/--snapshot/--ascii/--test) and the discipline for using them. Prevents the 'launch window and eyeball it' failure mode when working on layout, paint, and event dispatch.",
+  "author": {
+    "name": "Zaius Labs",
+    "url": "https://github.com/zaius-labs"
+  },
+  "homepage": "https://github.com/zaius-labs/rvst",
+  "repository": "https://github.com/zaius-labs/rvst",
+  "license": "MIT",
+  "keywords": ["rvst", "rendering", "blitz", "svelte", "validation", "headless-test"],
+  "skills": "./skills/"
+}

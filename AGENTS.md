@@ -26,7 +26,9 @@ plus a JSON command protocol. Treat them as first-class instruments.
 | `--ascii` | ASCII visualization of the rendered layout at a known viewport | Quick "does this look right?" check without opening a window |
 | `--test` | Headless interactive JSON-over-stdin protocol | Driving clicks, typing, HMR dispatches, etc. — the workhorse |
 
-See `.agents/skills/rvst-cli/SKILL.md` for the full command reference.
+See `agents/skills/rvst-cli/SKILL.md` for the full command reference.
+When this repo is installed as a Claude Code plugin (via `/plugin`), the
+skills become invokable as `rvst:rvst-cli` and `rvst:rvst-validation`.
 
 ## The workflow (not negotiable)
 
@@ -116,10 +118,13 @@ that's exactly the failure mode this document exists to prevent.
 
 ## Pointers
 
-- `rvst/.agents/skills/rvst-cli/SKILL.md` — every test-harness command with
-  examples.
-- `rvst/.agents/skills/rvst-validation/SKILL.md` — the validation discipline
-  expanded, with anti-patterns to avoid.
+- `agents/skills/rvst-cli/SKILL.md` — every test-harness command with
+  examples. Loadable as the `rvst:rvst-cli` Claude Code skill.
+- `agents/skills/rvst-validation/SKILL.md` — the validation discipline
+  expanded, with anti-patterns to avoid. Loadable as the
+  `rvst:rvst-validation` Claude Code skill.
+- `.claude-plugin/marketplace.json` — marketplace entry so this repo can
+  be added via `/plugin marketplace add <path-or-url>`.
 - `../AGENTS.md` (root) — monorepo-wide rules (branch = `dev`, no worktrees,
   beads for planning).
 - `../CLAUDE.md` — deprecated; content lives in `../AGENTS.md`.

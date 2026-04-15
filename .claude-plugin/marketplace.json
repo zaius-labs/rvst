@@ -1,0 +1,16 @@
+{
+  "name": "rvst",
+  "description": "RVST — desktop rendering engine tools for Claude Code",
+  "owner": {
+    "name": "Zaius Labs",
+    "email": "shane@zaius.dev"
+  },
+  "plugins": [
+    {
+      "name": "rvst",
+      "description": "Enforce RVST validation discipline — use the CLI, --test harness, --dump/--snapshot/--ascii instead of eyeballing the window",
+      "category": "development",
+      "source": "./agents"
+    }
+  ]
+}
